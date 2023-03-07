@@ -1,0 +1,102 @@
+
+# Adding new items with mutations
+mutation{
+  createProduct(input: {
+    name: "widgets81",
+    description: "Another widget in out garden8",
+    price: 36.928,
+    soldout:ONSALE,
+    inventory: 28,
+    stores: [
+      {
+        store: "Los Angeles8"
+      },
+      {
+        store: "Tokyo8"
+      }
+    ]
+  }){
+    id
+    name
+    description
+    price
+    soldout
+    inventory
+    stores{
+      store
+    }
+  }
+}
+
+# Updating items with mutations
+mutation{
+  updateProduct(input: {
+    id:"64073c927e8d39fd3fc3c8ed"
+    inventory: 26,
+    stores: [
+      {
+        store: "Los Angeles6"
+      },
+      {
+        store: "Tokyo6"
+      }
+    ]
+  }){
+    id
+    name
+    description
+    price
+    soldout
+    inventory
+    stores{
+      store
+    }
+  }
+}
+
+# Deleting items with mutations
+mutation{
+  deleteProduct(id: "6407491b7c3f0f03a6eda05c")
+}
+
+# Quering all the products
+query{
+  getAllProducts{
+    id
+    name
+    description
+  }
+}
+
+# Quering with aliases
+query{
+  price: getProduct(id: "640630dbe24b3d6388be9b41"){
+    id
+    name
+    price
+  }
+  description: getProduct(id: "64073c927e8d39fd3fc3c8ed"){
+    id
+    name
+    description
+  }
+}
+
+# Querying with fragments
+query{
+  widget1: getProduct(id: "640630dbe24b3d6388be9b41"){
+    ...widgetFragment
+  }
+  widget2: getProduct(id: "64073c927e8d39fd3fc3c8ed"){
+  ...widgetFragment
+  }
+}
+
+fragment widgetFragment on Product{
+  id
+  name
+  description
+  price
+  soldout
+  inventory
+}
